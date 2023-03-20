@@ -3,37 +3,31 @@
 
 struct list {
     int* array;
-    int size;
-    int capacity;
+    int len;
 };
-
-void createList(struct list* l, int initialCapacity) {
-    l->array = (int*) malloc(initialCapacity * sizeof(int));
-    l->size = 0;
-    l->capacity = initialCapacity;
-}
-
-void append(struct list* l, int element) {
-    if (l->size == l->capacity) {
-        int newCapacity = l->capacity * 2;
-        int* newArray = (int*) malloc(newCapacity * sizeof(int));
-        for (int i = 0; i < l->size; i++) {
-            newArray[i] = l->array[i];
-        }
-        free(l->array);
-        l->array = newArray;
-        l->capacity = newCapacity;
+void append(struct list *l, int element) {
+    
+    int* newArray = (int*) malloc(sizeof(int)*(l->len+1));
+    for (int i = 0; i < l->len; i++) {
+        newArray[i] = l->array[i];
     }
-    l->array[l->size++] = element;
+    free(l->array);
+    l->array = newArray;
+    l->array[l->len]=element;
+    l->len += 1;
 }
 
 
 int main() {
     struct list mylist;
-    createList(&mylist, 5);
-    append(&mylist, 1);
-    append(&mylist, 2);
-    append(&mylist, 3);
+    mylist.len=0;
+    mylist.array= (int*)malloc(sizeof(int)*0);
+    append(&mylist, 5);
+    append(&mylist, 12);
+    append(&mylist, 100);
+
+    for(int i=0;i<mylist.len;i++)
+        printf("%d",mylist.array[i]);
    
     return 0;
 }
